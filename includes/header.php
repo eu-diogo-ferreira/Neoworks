@@ -15,5 +15,5 @@
     <div class="container">
 
         <div class="jumbotron bg-danger">
-        <h1>Hello</h1>
+        <h1>NeoWorks</h1>
         </div>

@@ -92,7 +92,7 @@ class Vaga{
     /**
      * Método responsável por obter as vagas no BD
      *
-     * @param   string $where  [$where description]
+     * @param   string  $where  [$where description]
      * @param   string  $order  [$order description]
      * @param   string  $limit  [$limit description]
      * @param   string          [ description]
@@ -102,6 +102,22 @@ class Vaga{
     public static function getVagas($where = null, $order = null, $limit = null){
         return (new Database('vagas'))->select($where,$order,$limit)
                                         ->fetchAll(PDO::FETCH_CLASS,self::class);
+    }
+
+    /**
+     * Método responsável por obter a quantidade vagas no BD
+     *
+     * @param   string  $where  [$where description]
+     * @param   string  $order  [$order description]
+     * @param   string  $limit  [$limit description]
+     * @param   string          [ description]
+     *
+     * @return  array        [return description]
+     */
+    public static function getQuantidadeVagas($where = null){
+        return (new Database('vagas'))->select($where,null,null,'COUNT(*) as qtd')
+                                        ->fetchObject()
+                                        ->qtd;
     }
 
     public static function getVaga($id){

@@ -36,13 +36,33 @@ foreach($vagas as $vaga){
 
 $resultados = strlen($resultados) ? $resultados : '<tr>
                                                         <td colspan="6" class="text-center">Nenhuma vaga encontrada</td>
-                                                    </tr>'
+                                                    </tr>';
+
+//GETS
+/**
+ * Mantendo os resultados da busca ao mudar de página
+ */
+unset($_GET['status']);
+unset($_GET['pagina']);
+$gets = http_build_query($_GET);
+
+//PAGINÇÃO
+$paginacao = '';
+
+$paginas = $obPagination->getPages();
+
+foreach($paginas as $key=>$pagina){
+    $class = $pagina['atual'] ? 'btn-primary' : 'btn-light';
+    $paginacao .= '<a href="?pagina='.$pagina['pagina'].'&'.$gets.'">
+                        <button type="button" class="btn '.$class.'">'.$pagina['pagina'].'<button>
+                    </a>';
+}
 
 ?>
 
 <main>
 
-<?=$mensagem?>
+<?=$mensagem;?>
 
     <section>
 
@@ -51,6 +71,30 @@ $resultados = strlen($resultados) ? $resultados : '<tr>
             Cadastrar
             </button>
         </a>
+    </section>
+
+    <section>
+        <form action="" method="get">
+            <div class="row my-4">
+                <div class="col">
+                    <label>Filtrar por título</label>            
+                    <input type="text" class="form-control" name="busca" value="<?=$busca?>">
+                </div>
+
+                <div class="col">
+                    <label>Status</label>
+                    <select name="filtroStatus" class="form-control">
+                        <option value="">Todas</option>
+                        <option value="s" <?=$filtroStatus == 's' ? 'selected' : ''?>>Ativa</option>
+                        <option value="n" <?=$filtroStatus == 'n' ? 'selected' : ''?>>Inativa</option>
+                    </select>
+                </div>
+
+                <div class="col d-flex align-items-end">
+                    <button type="submit" class="btn btn-info">Filtrar</button>
+                </div>
+            </div>
+        </form>
     </section>
 
     <section>
@@ -70,5 +114,9 @@ $resultados = strlen($resultados) ? $resultados : '<tr>
                 <?=$resultados;?>            
             </tbody>
         </table>
+    </section>
+
+    <section>
+        <?=$paginacao;?>
     </section>
 </main>
