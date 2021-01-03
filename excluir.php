@@ -3,6 +3,11 @@
 include __DIR__."/vendor/autoload.php";
 
 use \App\Entity\Vaga;
+use \App\Session\Login;
+
+//OBRIGA O USUÁRIO A ESTAR LOGADO
+Login::requireLogin();
+
 //VALIDAÇÃO DO ID
 if(!isset($_GET['id']) or !is_numeric($_GET['id'])){
     header('location: index.php?staus=error');

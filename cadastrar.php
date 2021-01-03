@@ -5,6 +5,11 @@ include __DIR__."/vendor/autoload.php";
 define('TITLE', 'Cadastrar vaga');
 
 use \App\Entity\Vaga;
+use \App\Session\Login;
+
+//OBRIGA O USUÁRIO A ESTAR LOGADO
+Login::requireLogin();
+
 //INSTANCIANDO UM NOVO OBJETO
 $obVaga = new Vaga;
 
